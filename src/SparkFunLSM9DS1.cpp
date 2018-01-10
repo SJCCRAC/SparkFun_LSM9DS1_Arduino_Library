@@ -48,9 +48,20 @@ Distributed as-is; no warranty is given.
 #define SENSITIVITY_MAGNETOMETER_12  0.00043
 #define SENSITIVITY_MAGNETOMETER_16  0.00058
 
+
+bool addySwitch; 
+
 LSM9DS1::LSM9DS1()
 {
-	init(IMU_MODE_I2C, LSM9DS1_AG_ADDR(1), LSM9DS1_M_ADDR(1));
+	if (addySwitch == 1)
+		addySwitch = 0;
+	else if (addySwitch == 0)
+		addySwitch = 1;
+	else
+		addySwitch = 1;
+	
+	init(IMU_MODE_I2C, LSM9DS1_AG_ADDR(addySwitch), LSM9DS1_M_ADDR(addySwitch));
+	//Serial.println("addySwitch: " + String(addySwitch));//for debugging
 }
 
 LSM9DS1::LSM9DS1(interface_mode interface, uint8_t xgAddr, uint8_t mAddr)
